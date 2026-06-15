@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <InputDefaultBindingsFixApplied>true</InputDefaultBindingsFixApplied>
+    <ShowMenuFixApplied>true</ShowMenuFixApplied>
+    <MenuUpdateVersion>0</MenuUpdateVersion>
+    <Volume>56</Volume>
+    <RecentFiles>
+        <string>C:\Users\User\Final Fantasy 9 LoFi Mix - [1Hour] [BgbFRpPFf_0].webm</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq0000\dng_sq0000sh0002_LAST.mp4</string>
+        <string>C:\Users\User\Lemon Demon - Spirit Phone - full album (2016) [4LeSFBy2bZU].mp3</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq0070\dng_sq0070_BAB.mp4</string>
+        <string>C:\Users\User\The Top 100 Final Fantasy Songs of All Time! [DiYTaQ-Mgck].mp3</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_pre_prod\To_Deliver\BABs\sq0970_BAB.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq0970\dng_sq0970_BAB.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020sh0050_LAST.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020sh0040_LAST.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020sh0030_LAST.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020sh0020_LAST.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020_BAB.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_pre_prod\To_Deliver\BABs\sq0070_BAB.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020sh0080_LAST.mp4</string>
+        <string>C:\Users\User\Documents\projects\dinogames\dng_prod\movies\_renderLast\sq1020\dng_sq1020sh0070_LAST.mp4</string>
+    </RecentFiles>
+    <WindowLocation>
+        <X>0</X>
+        <Y>1</Y>
+    </WindowLocation>
+    <WindowPosition>
+        <X>1283</X>
+        <Y>1387</Y>
+    </WindowPosition>
+    <WindowSize>
+        <Width>1545</Width>
+        <Height>893</Height>
+    </WindowSize>
+    <AudioDevice />
+    <ConfigEditorSearch>Playback:</ConfigEditorSearch>
+    <Mute>no</Mute>
+    <StartupFolder />
+</AppSettings>
