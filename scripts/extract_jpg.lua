@@ -51,6 +51,8 @@ local function extract_jpg()
 	end
 end
 
+-- key bindings
+
 mp.add_forced_key_binding("J", "extract_jpg", extract_jpg)
 mp.register_script_message("extract-jpg", extract_jpg)
 mp.msg.info("extract_jpg.lua loaded; bound to Shift+J")

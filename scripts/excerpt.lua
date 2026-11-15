@@ -1,6 +1,6 @@
 -- script taken form Morrolinux https://github.com/morrolinux
 -- speficially from here : https://github.com/morrolinux/mpv-plugin-excerpt-v2
--- and i edited it a little to work for my preferences. 
+-- and i edited it a little to work for my preferences.
 
 -- This script allows to create excerpts of a video that is played,
 -- press "i" to mark the begin of the range to excerpt,
@@ -41,7 +41,7 @@ mp.register_event("eof-reached", excerpt_on_eof)
 
 -- check if intel board is vaapi compatible
 
-function excerpt_check_intel_board( installed_gpus_string ) 
+function excerpt_check_intel_board( installed_gpus_string )
 	if not string.find(installed_gpus_string, "intel") then
 		mp.msg.log("info", "No Intel board")
 		return false
@@ -64,7 +64,7 @@ function excerpt_check_intel_board( installed_gpus_string )
 end
 -- range marking
 
-function excerpt_mark_begin_handler() 
+function excerpt_mark_begin_handler()
 	pt = mp.get_property_native("playback-time")
 	if pt == nil or pt == "none" then
 		pt = 0.0
@@ -77,7 +77,7 @@ function excerpt_mark_begin_handler()
 		time = pt
 	}
 	mp.set_property_native("chapter-list", all_chapters)
- 
+
 	excerpt_begin = pt
 	if excerpt_begin > excerpt_end then
 		excerpt_end = excerpt_begin
@@ -93,7 +93,7 @@ function excerpt_mark_begin_handler()
 
  end
 
-function excerpt_mark_end_handler() 
+function excerpt_mark_end_handler()
 	pt = mp.get_property_native("playback-time")
 	if pt == nil or pt == "none" then
 		pt = 0.0
@@ -105,7 +105,7 @@ function excerpt_mark_end_handler()
 		time = pt
 	}
 	mp.set_property_native("chapter-list", all_chapters)
-	
+
 	excerpt_end = pt
 	if excerpt_end < excerpt_begin then
 		excerpt_begin = excerpt_end
@@ -125,9 +125,9 @@ encoding = true
 ffmpeg_profiles = {}
 export_profile_idx = 1
 
-function get_destination_filename()	
+function get_destination_filename()
 	srcname   = mp.get_property_native("filename")
-	local srcnamene = mp.get_property_native("filename/no-ext")	
+	local srcnamene = mp.get_property_native("filename/no-ext")
 	local ext_length = string.len(srcname) - string.len(srcnamene)
 	srcext = string.sub(srcname, -ext_length)
 	local name_length = string.len(tostring(srcname))
@@ -135,18 +135,18 @@ function get_destination_filename()
 	return tostring(srcpath .. ".excerpt_" .. excerpt_begin .. "-" .. excerpt_end)
 end
 
-function excerpt_encoding_toggle_handler() 
+function excerpt_encoding_toggle_handler()
 	export_profile_idx = (export_profile_idx % #ffmpeg_profiles) + 1
 	mp.osd_message("Export profile: " .. ffmpeg_profiles[export_profile_idx][1], 3)
 end
 
-function excerpt_write_handler() 
+function excerpt_write_handler()
 	if excerpt_begin == excerpt_end then
 		message = "excerpt_write: not writing because begin == end == " .. excerpt_begin
 		mp.osd_message(message, 3)
 		return
 	end
- 	
+
 	dstname = get_destination_filename()
 	duration = excerpt_end - excerpt_begin
 
@@ -156,7 +156,7 @@ function excerpt_write_handler()
 	end
 
 	local message = ""
-	message = message .. "writing to destination file '" .. dstname .. "'" .. "\nPlease wait..." 
+	message = message .. "writing to destination file '" .. dstname .. "'" .. "\nPlease wait..."
 	mp.msg.log("info", message)
 	mp.osd_message(message, 60)
 
@@ -170,17 +170,17 @@ function excerpt_write_handler()
 	if string.find(ffmpeg_profiles[export_profile_idx][1], "GPU") then
 		-- enable HW acceleration only if supported
 		if string.find(installed_gpus, "nvidia")  then
-			table.insert(cmd["args"], "-hwaccel") 
+			table.insert(cmd["args"], "-hwaccel")
 			table.insert(cmd["args"], "cuda")
 			table.insert(cmd["args"], "-hwaccel_output_format")
 			table.insert(cmd["args"], "cuda")
 		elseif excerpt_check_intel_board(installed_gpus) then
-			table.insert(cmd["args"], "-hwaccel") 
+			table.insert(cmd["args"], "-hwaccel")
 			table.insert(cmd["args"], "vaapi")
-			table.insert(cmd["args"], "-hwaccel_output_format") 
+			table.insert(cmd["args"], "-hwaccel_output_format")
 			table.insert(cmd["args"], "vaapi")
-			table.insert(cmd["args"], "-vaapi_device") 
-			table.insert(cmd["args"], "/dev/dri/renderD128") 
+			table.insert(cmd["args"], "-vaapi_device")
+			table.insert(cmd["args"], "/dev/dri/renderD128")
 		end
 	end
 
@@ -208,10 +208,10 @@ function excerpt_write_handler()
 		cmd["args"][#cmd["args"]] = dstname .. srcext
 	else
 		cmd["args"][#cmd["args"]] = dstname .. dstext
-	end 
+	end
 
 	local res = utils.subprocess(cmd)
-	
+
 	if (res["status"] ~= 0) then
 		message = message .. "failed!\nfailed to run excerpt - status = " .. res["status"]
 		if (res["error"] ~= nil) then
@@ -224,7 +224,7 @@ function excerpt_write_handler()
 		message = message .. "\n DONE!"
 		mp.osd_message(message, 10)
 	end
- 
+
 end
 
 -- things to do whenever a new file was loaded:
@@ -249,15 +249,15 @@ function excerpt_on_loaded()
 	-- Set GPU profiles
 	if operating_system == "darwin" then
 		table.insert(ffmpeg_profiles, {"ACCURATE (MacOS GPU)", "-c:v", "h264_videotoolbox", "-b:v", "10000k", "-c:a", "aac", ".mp4"})
-	else 
+	else
 		if string.find(installed_gpus, "nvidia")  then
 			table.insert(ffmpeg_profiles, {"ACCURATE (NVIDIA GPU)", "-c:v", "h264_nvenc", "-preset", "slow", "-c:a", "aac", ".mp4"})
 		elseif excerpt_check_intel_board(installed_gpus)  then
 			table.insert(ffmpeg_profiles, {"ACCURATE (INTEL GPU)", "-vf", "'format=nv12,hwupload'", "-c:v", "h264_vaapi", "-qp", "25", "-c:a", "aac", ".mp4"})
 		end
-	end 
+	end
 
-	-- ADD YOUR EXPORT PROFILES HERE 
+	-- ADD YOUR EXPORT PROFILES HERE
 	table.insert(ffmpeg_profiles, {"ACCURATE (CPU)", "-c:v", "libx264", "-crf", "23", "-c:a", "aac", ".mp4"})
 	table.insert(ffmpeg_profiles, {"FAST", "-c:v", "copy", "-c:a", "copy", "."})
 
@@ -267,7 +267,7 @@ mp.register_event("file-loaded", excerpt_on_loaded)
 
 -- key bindings
 
-mp.add_key_binding("shift+I", "excerpt_mark_begin", excerpt_mark_begin_handler)
-mp.add_key_binding("shift+O", "excerpt_mark_end", excerpt_mark_end_handler)
-mp.add_key_binding("shift+E", "excerpt_encoding_toggle", excerpt_encoding_toggle_handler)
+mp.add_key_binding("I", "excerpt_mark_begin", excerpt_mark_begin_handler)
+mp.add_key_binding("O", "excerpt_mark_end", excerpt_mark_end_handler)
+mp.add_key_binding("E", "excerpt_encoding_toggle", excerpt_encoding_toggle_handler)
 mp.add_key_binding("x", "excerpt_write", excerpt_write_handler)

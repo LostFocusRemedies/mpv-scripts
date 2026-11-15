@@ -6,6 +6,8 @@ I used that to learn the API, and Lua a bit, and went on to make my own scripts,
 ## Installation: 
 
 On Windows, just place them in : `C:\Users\User\AppData\Roaming\mpv.net\scripts\`
+On Windows, I actually started using scoop, so the location is : `C:\Users\User\scoop\apps\mpv.net\7.1.2.0\portable_config\`
+
 On Linux is probably way easier, somewhere in `~/.config/mpv/scripts` but double check that. 
 
 ## NOTE to self
